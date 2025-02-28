@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lab5 - Exercise 1</title>
+    </head>
+    <body>
+        <input type="text" id="textInput" placeholder="Enter a user number (1-30)"/>
+        <label id="textLabel"></label>
+        <button id="redButton">Red</button>
+        <button id="blueButton">Blue</button>
+        <button id="greenButton">Green</button>
+        <button id="orangeButton">Orange</button>
+        <button id="purpleButton">Purple</button>
+    </body>
+
+    <script type="text/javascript">
+
+        async function retrieveData(idNumber, labelItem){
+            try{
+                const response = await fetch("https://67c1fa7c61d8935867e4eedb.mockapi.io/users_api");
+                const data = await response.json();
+
+                if(idNumber > 30 || idNumber <= 0){
+                    labelItem.textContent = "No users were found with the provided User_ID";
+                }
+                else{
+                    for(let i = 0; i < 30; i++){
+                        if (idNumber == data[i].id){
+                            labelItem.textContent =  `ID: ${data[i].id},Name: ${data[i].first_name},Group: ${data[i].user_group}`;
+                        }
+                    }
+                }
+            }
+
+            catch (error) {
+                console.error("Error fetching data: ", error);
+            }
+        }
+
+        var inputValue = document.getElementById('textInput');
+        inputValue.addEventListener('keydown', (event) =>{
+
+            if(event.key == "Enter"){
+                var labelValue = document.getElementById('textLabel');
+                retrieveData(inputValue.value, labelValue);
+                inputValue.value = "";
+            
+            }
+
+        });
+        // Selecting an element
+
+
+        const redButton = document.getElementById('redButton');
+        const blueButton = document.getElementById('blueButton');
+        const greenButton = document.getElementById('greenButton');
+        const orangeButton = document.getElementById('orangeButton');
+        const purpleButton = document.getElementById('purpleButton');
+
+        // Adding a click event listener
+        redButton.addEventListener('click', () => {
+            var labelValue = document.getElementById('textLabel');
+            labelValue.style.color = "red";
+        });
+
+        // Adding a click event listener
+        blueButton.addEventListener('click', () => {
+            var labelValue = document.getElementById('textLabel');
+            labelValue.style.color = "blue";
+        });
+
+        // Adding a click event listener
+        greenButton.addEventListener('click', () => {
+            var labelValue = document.getElementById('textLabel');
+            labelValue.style.color = "green";
+        });
+        // Adding a click event listener
+        orangeButton.addEventListener('click', () => {
+            var labelValue = document.getElementById('textLabel');
+            labelValue.style.color = "orange";
+        });
+        // Adding a click event listener
+        purpleButton.addEventListener('click', () => {
+            var labelValue = document.getElementById('textLabel');
+            labelValue.style.color = "purple";
+        });
+    </script>
+</html>
